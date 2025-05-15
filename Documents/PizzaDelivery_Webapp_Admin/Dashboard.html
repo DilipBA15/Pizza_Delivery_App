@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Delivery App</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#FF4141',secondary:'#FFA726'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #FAFAFA;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .logo {
+            font-family: 'Pacifico', serif;
+        }
+        .hide-arrows::-webkit-outer-spin-button,
+        .hide-arrows::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .hide-arrows {
+            -moz-appearance: textfield;
+        }
+        .custom-radio input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .custom-radio input[type="radio"] + label {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 9999px;
+            background-color: white;
+            transition: all 0.2s;
+        }
+        .custom-radio input[type="radio"]:checked + label {
+            background-color: #FF4141;
+            color: white;
+            border-color: #FF4141;
+        }
+        .custom-checkbox input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .custom-checkbox input[type="checkbox"] + label {
+            cursor: pointer;
+            position: relative;
+            padding-left: 2rem;
+        }
+        .custom-checkbox input[type="checkbox"] + label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 4px;
+            background-color: white;
+        }
+        .custom-checkbox input[type="checkbox"]:checked + label:before {
+            background-color: #FF4141;
+            border-color: #FF4141;
+        }
+        .custom-checkbox input[type="checkbox"]:checked + label:after {
+            content: '';
+            position: absolute;
+            left: 0.45rem;
+            top: 0.25rem;
+            width: 0.35rem;
+            height: 0.7rem;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        .payment-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .payment-option input[type="radio"] + label {
+            cursor: pointer;
+            padding: 1rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            background-color: white;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .payment-option input[type="radio"]:checked + label {
+            border-color: #FF4141;
+            background-color: rgba(255, 65, 65, 0.05);
+        }
+        .payment-option input[type="radio"] + label .check-circle {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            border: 2px solid #E5E7EB;
+            margin-right: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .payment-option input[type="radio"]:checked + label .check-circle {
+            border-color: #FF4141;
+        }
+        .payment-option input[type="radio"]:checked + label .check-circle:after {
+            content: '';
+            width: 0.625rem;
+            height: 0.625rem;
+            border-radius: 50%;
+            background-color: #FF4141;
+        }
+    </style>
+</head>
+<body class="w-[375px] mx-auto min-h-[762px] relative pb-16">
+    <!-- Welcome/Login Screen -->
+    <div id="welcome-screen" class="relative h-screen">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70 z-10"></div>
+        <img src="https://readdy.ai/api/search-image?query=Delicious%20pizza%20with%20melting%20cheese%20and%20various%20toppings%20on%20rustic%20wooden%20table%2C%20steam%20rising%2C%20appetizing%20Italian%20food%2C%20professional%20food%20photography%2C%20high-quality%20image%2C%20warm%20lighting%2C%20shallow%20depth%20of%20field&width=375&height=812&seq=pizza1&orientation=portrait" alt="Pizza Background" class="absolute inset-0 w-full h-full object-cover">
+        
+        <div class="relative z-20 flex flex-col items-center justify-between h-full pt-24 pb-16 px-6">
+            <div class="text-center">
+                <h1 class="logo text-white text-4xl mb-2">logo</h1>
+                <p class="text-white/90 text-sm">Fresh & Hot. Delivered Fast.</p>
+            </div>
+            
+            <div class="w-full">
+                <h2 class="text-white text-2xl font-bold mb-8 text-center">Welcome to Pizza Express</h2>
+                
+                <button class="w-full bg-primary text-white py-3.5 font-medium mb-4 !rounded-button flex items-center justify-center cursor-pointer">
+                    <span>Continue with Phone Number</span>
+                </button>
+                
+                <button class="w-full bg-white/10 backdrop-blur-sm border border-white/30 text-white py-3.5 font-medium !rounded-button flex items-center justify-center cursor-pointer">
+                    <span>Continue as Guest</span>
+                </button>
+                
+                <div class="mt-8 flex items-center justify-center space-x-4">
+                    <div class="flex items-center">
+                        <div class="w-5 h-5 flex items-center justify-center text-yellow-400">
+                            <i class="ri-star-fill ri-lg"></i>
+                        </div>
+                        <span class="text-white text-sm ml-1">4.8</span>
+                    </div>
+                    <div class="w-1 h-1 bg-white/50 rounded-full"></div>
+                    <div class="text-white/90 text-sm">500K+ Happy Customers</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OTP Verification Screen (Initially Hidden) -->
+    <div id="otp-screen" class="h-screen px-6 pt-16 hidden">
+        <div class="flex items-center mb-6">
+            <button id="back-to-welcome" class="w-10 h-10 flex items-center justify-center cursor-pointer">
+                <i class="ri-arrow-left-line ri-lg"></i>
+            </button>
+            <h1 class="text-xl font-bold">Verify Phone</h1>
+        </div>
+        
+        <p class="text-gray-600 mb-8">We've sent a verification code to +1 (555) 123-4567</p>
+        
+        <div class="flex justify-between mb-8">
+            <input type="text" maxlength="1" class="w-14 h-14 rounded-md border border-gray-300 text-center text-xl font-bold" autofocus>
+            <input type="text" maxlength="1" class="w-14 h-14 rounded-md border border-gray-300 text-center text-xl font-bold">
+            <input type="text" maxlength="1" class="w-14 h-14 rounded-md border border-gray-300 text-center text-xl font-bold">
+            <input type="text" maxlength="1" class="w-14 h-14 rounded-md border border-gray-300 text-center text-xl font-bold">
+        </div>
+        
+        <button class="w-full bg-primary text-white py-3.5 font-medium !rounded-button flex items-center justify-center cursor-pointer">
+            <span>Verify & Continue</span>
+        </button>
+        
+        <p class="text-center mt-6 text-gray-600">
+            Didn't receive code? <a href="#" class="text-primary font-medium">Resend</a>
+        </p>
+    </div>
+
+    <!-- Home/Menu Screen (Initially Hidden) -->
+    <div id="home-screen" class="pb-20 hidden">
+        <!-- Header -->
+        <div class="fixed top-0 left-0 w-full bg-white z-50 shadow-sm">
+            <div class="flex items-center justify-between px-4 py-3 max-w-[375px] mx-auto">
+                <h1 class="logo text-primary text-2xl">logo</h1>
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 flex items-center justify-center cursor-pointer">
+                        <i class="ri-search-line ri-lg"></i>
+                    </div>
+                    <div class="w-10 h-10 flex items-center justify-center relative cursor-pointer">
+                        <i class="ri-shopping-cart-line ri-lg"></i>
+                        <span class="absolute top-0 right-0 w-5 h-5 bg-primary text-white rounded-full text-xs flex items-center justify-center">3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="pt-16 px-4">
+            <!-- Location -->
+            <div class="flex items-center py-3">
+                <div class="w-5 h-5 flex items-center justify-center text-primary">
+                    <i class="ri-map-pin-line"></i>
+                </div>
+                <span class="text-sm ml-1">Delivering to: <span class="font-medium">123 Main St</span></span>
+                <div class="w-5 h-5 flex items-center justify-center ml-1 cursor-pointer">
+                    <i class="ri-arrow-down-s-line"></i>
+                </div>
+            </div>
+            
+            <!-- Deals Banner -->
+            <div class="mb-6 overflow-hidden rounded-lg">
+                <img src="https://readdy.ai/api/search-image?query=Delicious%20pizza%20promotion%20banner%2C%2050%25%20off%20deal%2C%20appetizing%20pizza%20with%20melting%20cheese%2C%20vibrant%20colors%2C%20professional%20food%20photography%2C%20marketing%20banner%20design%2C%20clean%20background%20with%20promotional%20text%2C%20high-quality%20image&width=375&height=150&seq=banner1&orientation=landscape" alt="Special Deals" class="w-full h-36 object-cover">
+            </div>
+            
+            <!-- Categories -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-bold">Categories</h2>
+                    <a href="#" class="text-primary text-sm">See All</a>
+                </div>
+                
+                <div class="grid grid-cols-4 gap-3">
+                    <div class="flex flex-col items-center cursor-pointer">
+                        <div class="w-16 h-16 rounded-full overflow-hidden mb-2">
+                            <img src="https://readdy.ai/api/search-image?query=icon%2C%203D%20cartoon%2C%20Pizza%2C%20the%20icon%20should%20take%20up%2070%25%20of%20the%20frame%2C%20vibrant%20colors%20with%20soft%20gradients%2C%20minimalist%20design%2C%20smooth%20rounded%20shapes%2C%20subtle%20shading%2C%20no%20outlines%2C%20centered%20composition%2C%20isolated%20on%20white%20background%2C%20playful%20and%20friendly%20aesthetic%2C%20isometric%20perspective%2C%20high%20detail%20quality%2C%20clean%20and%20modern%20look%2C%20single%20object%20focus&width=64&height=64&seq=cat1&orientation=squarish" alt="Pizzas" class="w-full h-full object-cover">
+                        </div>
+                        <span class="text-xs font-medium text-center whitespace-nowrap overflow-hidden text-overflow-ellipsis">Pizzas</span>
+                    </div>
+                    <div class="flex flex-col items-center cursor-pointer">
+                        <div class="w-16 h-16 rounded-full overflow-hidden mb-2">
+                            <img src="https://readdy.ai/api/search-image?query=icon%2C%203D%20cartoon%2C%20Chicken%20Wings%2C%20the%20icon%20should%20take%20up%2070%25%20of%20the%20frame%2C%20vibrant%20colors%20with%20soft%20gradients%2C%20minimalist%20design%2C%20smooth%20rounded%20shapes%2C%20subtle%20shading%2C%20no%20outlines%2C%20centered%20composition%2C%20isolated%20on%20white%20background%2C%20playful%20and%20friendly%20aesthetic%2C%20isometric%20perspective%2C%20high%20detail%20quality%2C%20clean%20and%20modern%20look%2C%20single%20object%20focus&width=64&height=64&seq=cat2&orientation=squarish" alt="Sides" class="w-full h-full object-cover">
+                        </div>
+                        <span class="text-xs font-medium text-center whitespace-nowrap overflow-hidden text-overflow-ellipsis">Sides</span>
+                    </div>
+                    <div class="flex flex-col items-center cursor-pointer">
+                        <div class="w-16 h-16 rounded-full overflow-hidden mb-2">
+                            <img src="https://readdy.ai/api/search-image?query=icon%2C%203D%20cartoon%2C%20Soda%20drink%20with%20straw%2C%20the%20icon%20should%20take%20up%2070%25%20of%20the%20frame%2C%20vibrant%20colors%20with%20soft%20gradients%2C%20minimalist%20design%2C%20smooth%20rounded%20shapes%2C%20subtle%20shading%2C%20no%20outlines%2C%20centered%20composition%2C%20isolated%20on%20white%20background%2C%20playful%20and%20friendly%20aesthetic%2C%20isometric%20perspective%2C%20high%20detail%20quality%2C%20clean%20and%20modern%20look%2C%20single%20object%20focus&width=64&height=64&seq=cat3&orientation=squarish" alt="Drinks" class="w-full h-full object-cover">
+                        </div>
+                        <span class="text-xs font-medium text-center whitespace-nowrap overflow-hidden text-overflow-ellipsis">Drinks</span>
+                    </div>
+                    <div class="flex flex-col items-center cursor-pointer">
+                        <div class="w-16 h-16 rounded-full overflow-hidden mb-2">
+                            <img src="https://readdy.ai/api/search-image?query=icon%2C%203D%20cartoon%2C%20Pizza%20combo%20meal%20with%20drink%20and%20sides%2C%20the%20icon%20should%20take%20up%2070%25%20of%20the%20frame%2C%20vibrant%20colors%20with%20soft%20gradients%2C%20minimalist%20design%2C%20smooth%20rounded%20shapes%2C%20subtle%20shading%2C%20no%20outlines%2C%20centered%20composition%2C%20isolated%20on%20white%20background%2C%20playful%20and%20friendly%20aesthetic%2C%20isometric%20perspective%2C%20high%20detail%20quality%2C%20clean%20and%20modern%20look%2C%20single%20object%20focus&width=64&height=64&seq=cat4&orientation=squarish" alt="Combos" class="w-full h-full object-cover">
+                        </div>
+                        <span class="text-xs font-medium text-center whitespace-nowrap overflow-hidden text-overflow-ellipsis">Combos</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Popular Items -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-bold">Popular Items</h2>
+                    <a href="#" class="text-primary text-sm">See All</a>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer product-card">
+                        <div class="h-32 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=Pepperoni%20pizza%20with%20melted%20cheese%20on%20a%20clean%20white%20plate%2C%20professional%20food%20photography%2C%20appetizing%20Italian%20food%2C%20high-quality%20image%2C%20bright%20lighting%2C%20clean%20background%2C%20commercial%20product%20shot&width=180&height=128&seq=pizza1&orientation=landscape" alt="Pepperoni Pizza" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <h3 class="font-medium mb-1">Pepperoni Pizza</h3>
+                            <p class="text-gray-500 text-xs mb-2 line-clamp-2">Classic pepperoni with extra cheese</p>
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold">$12.99</span>
+                                <button class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center cursor-pointer">
+                                    <i class="ri-add-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer product-card">
+                        <div class="h-32 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=Margherita%20pizza%20with%20fresh%20basil%20on%20a%20clean%20white%20plate%2C%20professional%20food%20photography%2C%20appetizing%20Italian%20food%2C%20high-quality%20image%2C%20bright%20lighting%2C%20clean%20background%2C%20commercial%20product%20shot&width=180&height=128&seq=pizza2&orientation=landscape" alt="Margherita Pizza" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <h3 class="font-medium mb-1">Margherita</h3>
+                            <p class="text-gray-500 text-xs mb-2 line-clamp-2">Fresh tomatoes, mozzarella & basil</p>
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold">$10.99</span>
+                                <button class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center cursor-pointer">
+                                    <i class="ri-add-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer product-card">
+                        <div class="h-32 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=BBQ%20chicken%20pizza%20with%20red%20onions%20on%20a%20clean%20white%20plate%2C%20professional%20food%20photography%2C%20appetizing%20Italian%20food%2C%20high-quality%20image%2C%20bright%20lighting%2C%20clean%20background%2C%20commercial%20product%20shot&width=180&height=128&seq=pizza3&orientation=landscape" alt="BBQ Chicken Pizza" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <h3 class="font-medium mb-1">BBQ Chicken</h3>
+                            <p class="text-gray-500 text-xs mb-2 line-clamp-2">Grilled chicken, BBQ sauce & red onions</p>
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold">$14.99</span>
+                                <button class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center cursor-pointer">
+                                    <i class="ri-add-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer product-card">
+                        <div class="h-32 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=Vegetarian%20supreme%20pizza%20with%20bell%20peppers%2C%20mushrooms%2C%20olives%20on%20a%20clean%20white%20plate%2C%20professional%20food%20photography%2C%20appetizing%20Italian%20food%2C%20high-quality%20image%2C%20bright%20lighting%2C%20clean%20background%2C%20commercial%20product%20shot&width=180&height=128&seq=pizza4&orientation=landscape" alt="Veggie Supreme" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <h3 class="font-medium mb-1">Veggie Supreme</h3>
+                            <p class="text-gray-500 text-xs mb-2 line-clamp-2">Bell peppers, mushrooms, olives & onions</p>
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold">$13.99</span>
+                                <button class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center cursor-pointer">
+                                    <i class="ri-add-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Best Deals -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-bold">Best Deals</h2>
+                    <a href="#" class="text-primary text-sm">See All</a>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer">
+                        <div class="flex">
+                            <div class="w-24 h-24 overflow-hidden">
+                                <img src="https://readdy.ai/api/search-image?query=Family%20combo%20meal%20with%20large%20pizza%2C%20chicken%20wings%2C%20garlic%20bread%20and%20soda%20drinks%20on%20a%20clean%20white%20background%2C%20professional%20food%20photography%2C%20appetizing%20food%2C%20high-quality%20image%2C%20bright%20lighting%2C%20commercial%20product%20shot&width=96&height=96&seq=combo1&orientation=squarish" alt="Family Combo" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-3 flex-1">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h3 class="font-medium">Family Combo</h3>
+                                    <span class="text-xs bg-secondary/20 text-secondary px-2 py-0.5 rounded-full">20% OFF</span>
+                                </div>
+                                <p class="text-gray-500 text-xs mb-2 line-clamp-2">1 Large pizza, 8 wings, garlic bread & 2L soda</p>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <span class="font-bold">$24.99</span>
+                                        <span class="text-gray-400 text-xs line-through ml-1">$31.99</span>
+                                    </div>
+                                    <button class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center cursor-pointer">
+                                        <i class="ri-add-line"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer">
+                        <div class="flex">
+                            <div class="w-24 h-24 overflow-hidden">
+                                <img src="https://readdy.ai/api/search-image?query=Two%20medium%20pizzas%20side%20by%20side%20on%20a%20clean%20white%20background%2C%20professional%20food%20photography%2C%20appetizing%20Italian%20food%2C%20high-quality%20image%2C%20bright%20lighting%2C%20commercial%20product%20shot&width=96&height=96&seq=combo2&orientation=squarish" alt="2 Medium Pizzas" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-3 flex-1">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h3 class="font-medium">2 Medium Pizzas</h3>
+                                    <span class="text-xs bg-secondary/20 text-secondary px-2 py-0.5 rounded-full">15% OFF</span>
+                                </div>
+                                <p class="text-gray-500 text-xs mb-2 line-clamp-2">Choose any 2 medium pizzas with up to 3 toppings each</p>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <span class="font-bold">$19.99</span>
+                                        <span class="text-gray-400 text-xs line-through ml-1">$23.98</span>
+                                    </div>
+                                    <button class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center cursor-pointer">
+                                        <i class="ri-add-line"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Customization Screen (Initially Hidden) -->
+    <div id="product-screen" class="pb-24 hidden">
+        <!-- Header -->
+        <div class="fixed top-0 left-0 w-full bg-white z-50 shadow-sm">
+            <div class="flex items-center px-4 py-3 max-w-[375px] mx-auto">
+                <button id="back-to-home" class="w-10 h-10 flex items-center justify-center cursor-pointer">
+                    <i class="ri-arrow-left-line ri-lg"></i>
+                </button>
+                <h1 class="text-lg font-bold ml-2">Customize Pizza</h1>
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="pt-16">
+            <!-- Product Image -->
+            <div class="h-64 overflow-hidden">
+                <img src="https://readdy.ai/api/search-image?query=Pepperoni%20pizza%20with%20melted%20cheese%2C%20professional%20food%20photography%2C%20appetizing%20Italian%20food%2C%20high-quality%20image%2C%20bright%20lighting%2C%20clean%20background%2C%20commercial%20product%20shot%2C%20top%20view&width=375&height=256&seq=pizza_detail&orientation=landscape" alt="Pepperoni Pizza" class="w-full h-full object-cover">
+            </div>
+            
+            <div class="px-4 py-4">
+                <h2 class="text-xl font-bold mb-1">Pepperoni Pizza</h2>
+                <p class="text-gray-600 text-sm mb-6">Our classic pepperoni pizza with extra cheese on a hand-tossed crust.</p>
+                
+                <!-- Size Selection -->
+                <div class="mb-6">
+                    <h3 class="font-medium mb-3">Choose Size</h3>
+                    <div class="flex space-x-3">
+                        <div class="custom-radio">
+                            <input type="radio" name="size" id="size-s" value="small">
+                            <label for="size-s">Small</label>
+                        </div>
+                        <div class="custom-radio">
+                            <input type="radio" name="size" id="size-m" value="medium" checked>
+                            <label for="size-m">Medium</label>
+                        </div>
+                        <div class="custom-radio">
+                            <input type="radio" name="size" id="size-l" value="large">
+                            <label for="size-l">Large</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Crust Selection -->
+                <div class="mb-6">
+                    <h3 class="font-medium mb-3">Choose Crust</h3>
+                    <div class="flex space-x-3 overflow-x-auto pb-2">
+                        <div class="custom-radio">
+                            <input type="radio" name="crust" id="crust-classic" value="classic" checked>
+                            <label for="crust-classic">Classic</label>
+                        </div>
+                        <div class="custom-radio">
+                            <input type="radio" name="crust" id="crust-thin" value="thin">
+                            <label for="crust-thin">Thin</label>
+                        </div>
+                        <div class="custom-radio">
+                            <input type="radio" name="crust" id="crust-stuffed" value="stuffed">
+                            <label for="crust-stuffed">Stuffed</label>
+                        </div>
+                        <div class="custom-radio">
+                            <input type="radio" name="crust" id="crust-gluten-free" value="gluten-free">
+                            <label for="crust-gluten-free">Gluten Free</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Extra Toppings -->
+                <div class="mb-6">
+                    <h3 class="font-medium mb-3">Extra Toppings</h3>
+                    
+                    <div class="flex space-x-3 mb-4 px-1 py-1 bg-gray-100 rounded-full inline-flex">
+                        <button class="px-3 py-1 bg-white rounded-full text-sm font-medium shadow-sm">Veg</button>
+                        <button class="px-3 py-1 text-sm font-medium">Non-Veg</button>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="custom-checkbox">
+                            <input type="checkbox" id="topping-mushroom" name="toppings" value="mushroom">
+                            <label for="topping-mushroom" class="flex items-center">
+                                <span class="flex-1">Mushroom</span>
+                                <span class="text-sm font-medium">+$1.50</span>
+                            </label>
+                        </div>
+                        
+                        <div class="custom-checkbox">
+                            <input type="checkbox" id="topping-olives" name="toppings" value="olives">
+                            <label for="topping-olives" class="flex items-center">
+                                <span class="flex-1">Black Olives</span>
+                                <span class="text-sm font-medium">+$1.50</span>
+                            </label>
+                        </div>
+                        
+                        <div class="custom-checkbox">
+                            <input type="checkbox" id="topping-peppers" name="toppings" value="peppers">
+                            <label for="topping-peppers" class="flex items-center">
+                                <span class="flex-1">Bell Peppers</span>
+                                <span class="text-sm font-medium">+$1.50</span>
+                            </label>
+                        </div>
+                        
+                        <div class="custom-checkbox">
+                            <input type="checkbox" id="topping-onions" name="toppings" value="onions">
+                            <label for="topping-onions" class="flex items-center">
+                                <span class="flex-1">Red Onions</span>
+                                <span class="text-sm font-medium">+$1.50</span>
+                            </label>
+                        </div>
+                        
+                        <div class="custom-checkbox">
+                            <input type="checkbox" id="topping-jalapenos" name="toppings" value="jalapenos">
+                            <label for="topping-jalapenos" class="flex items-center">
+                                <span class="flex-1">Jalapeños</span>
+                                <span class="text-sm font-medium">+$1.50</span>
+                            </label>
+                        </div>
+                        
+                        <div class="custom-checkbox">
+                            <input type="checkbox" id="topping-pineapple" name="toppings" value="pineapple">
+                            <label for="topping-pineapple" class="flex items-center">
+                                <span class="flex-1">Pineapple</span>
+                                <span class="text-sm font-medium">+$1.50</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Fixed Bottom Bar -->
+        <div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 max-w-[375px] mx-auto">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center">
+                    <span class="text-sm text-gray-600">Quantity:</span>
+                    <div class="flex items-center ml-3">
+                        <button class="w-8 h-8 border border-gray-300 rounded-full flex items-center justify-center cursor-pointer">
+                            <i class="ri-subtract-line"></i>
+                        </button>
+                        <span class="mx-3 font-medium">1</span>
+                        <button class="w-8 h-8 border border-gray-300 rounded-full flex items-center justify-center cursor-pointer">
+                            <i class="ri-add-line"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="font-bold text-lg">$14.99</div>
+            </div>
+            
+            <button class="w-full bg-primary text-white py-3.5 font-medium !rounded-button flex items-center justify-center cursor-pointer">
+                <span>Add to Cart</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Cart Screen (Initially Hidden) -->
+    <div id="cart-screen" class="pb-32 hidden">
+        <!-- Header -->
+        <div class="fixed top-0 left-0 w-full bg-white z-50 shadow-sm">
+            <div class="flex items-center px-4 py-3 max-w-[375px] mx-auto">
+                <button id="back-to-home-from-cart" class="w-10 h-10 flex items-center justify-center cursor-pointer">
+                    <i class="ri-arrow-left-line ri-lg"></i>
+                </button>
+                <h1 class="text-lg font-bold ml-2">My Cart</h1>
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="pt-16 px-4">
+            <!-- Cart Items -->
+            <div class="mb-6">
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-4">
+                    <div class="flex p-3 border-b border-gray-100">
+                        <div class="w-20 h-20 rounded overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=Pepperoni%20pizza%20with%20melted%20cheese%2C%20professional%20food%20photography%2C%20appetizing%20Italian%20food%2C%20high-quality%20image%2C%20bright%20lighting%2C%20clean%20background%2C%20commercial%20product%20shot&width=80&height=80&seq=cart_pizza1&orientation=squarish" alt="Pepperoni Pizza" class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-3 flex-1">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h3 class="font-medium">Pepperoni Pizza</h3>
+                                    <p class="text-gray-500 text-xs">Medium, Classic Crust</p>
+                                    <p class="text-gray-500 text-xs">Extra: Mushroom, Olives</p>
+                                </div>
+                                <button class="w-7 h-7 flex items-center justify-center text-gray-400 cursor-pointer">
+                                    <i class="ri-delete-bin-line"></i>
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-between mt-2">
+                                <div class="flex items-center">
+                                    <button class="w-6 h-6 border border-gray-300 rounded-full flex items-center justify-center cursor-pointer">
+                                        <i class="ri-subtract-line text-xs"></i>
+                                    </button>
+                                    <span class="mx-2 text-sm font-medium">1</span>
+                                    <button class="w-6 h-6 border border-gray-300 rounded-full flex items-center justify-center cursor-pointer">
+                                        <i class="ri-add-line text-xs"></i>
+                                    </button>
+                                </div>
+                                <span class="font-bold">$14.99</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-4">
+                    <div class="flex p-3 border-b border-gray-100">
+                        <div class="w-20 h-20 rounded overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=Crispy%20chicken%20wings%20with%20dipping%20sauce%2C%20professional%20food%20photography%2C%20appetizing%20food%2C%20high-quality%20image%2C%20bright%20lighting%2C%20clean%20background%2C%20commercial%20product%20shot&width=80&height=80&seq=cart_wings&orientation=squarish" alt="Chicken Wings" class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-3 flex-1">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h3 class="font-medium">Chicken Wings</h3>
+                                    <p class="text-gray-500 text-xs">8 pcs, BBQ Flavor</p>
+                                </div>
+                                <button class="w-7 h-7 flex items-center justify-center text-gray-400 cursor-pointer">
+                                    <i class="ri-delete-bin-line"></i>
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-between mt-2">
+                                <div class="flex items-center">
+                                    <button class="w-6 h-6 border border-gray-300 rounded-full flex items-center justify-center cursor-pointer">
+                                        <i class="ri-subtract-line text-xs"></i>
+                                    </button>
+                                    <span class="mx-2 text-sm font-medium">1</span>
+                                    <button class="w-6 h-6 border border-gray-300 rounded-full flex items-center justify-center cursor-pointer">
+                                        <i class="ri-add-line text-xs"></i>
+                                    </button>
+                                </div>
+                                <span class="font-bold">$8.99</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="flex p-3">
+                        <div class="w-20 h-20 rounded overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=Cola%20soda%20in%20a%20glass%20with%20ice%20cubes%2C%20professional%20beverage%20photography%2C%20refreshing%20drink%2C%20high-quality%20image%2C%20bright%20lighting%2C%20clean%20background%2C%20commercial%20product%20shot&width=80&height=80&seq=cart_drink&orientation=squarish" alt="Cola" class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-3 flex-1">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h3 class="font-medium">Cola</h3>
+                                    <p class="text-gray-500 text-xs">1.5L Bottle</p>
+                                </div>
+                                <button class="w-7 h-7 flex items-center justify-center text-gray-400 cursor-pointer">
+                                    <i class="ri-delete-bin-line"></i>
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-between mt-2">
+                                <div class="flex items-center">
+                                    <button class="w-6 h-6 border border-gray-300 rounded-full flex items-center justify-center cursor-pointer">
+                                        <i class="ri-subtract-line text-xs"></i>
+                                    </button>
+                                    <span class="mx-2 text-sm font-medium">1</span>
+                                    <button class="w-6 h-6 border border-gray-300 rounded-full flex items-center justify-center cursor-pointer">
+                                        <i class="ri-add-line text-xs"></i>
+                                    </button>
+                                </div>
+                                <span class="font-bold">$2.99</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Delivery Address -->
+            <div class="mb-6">
+                <h2 class="text-lg font-bold mb-3">Delivery Address</h2>
+                
+                <div class="bg-white rounded-lg shadow-sm p-3 mb-3">
+                    <div class="flex items-start">
+                        <div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary">
+                            <i class="ri-home-line"></i>
+                        </div>
+                        <div class="ml-3 flex-1">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-medium">Home</h3>
+                                <span class="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">Default</span>
+                            </div>
+                            <p class="text-gray-600 text-sm">123 Main Street, Apt 4B, New York, NY 10001</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="w-full border border-gray-300 text-gray-700 py-2.5 font-medium !rounded-button flex items-center justify-center cursor-pointer">
+                    <i class="ri-add-line mr-2"></i>
+                    <span>Add New Address</span>
+                </button>
+            </div>
+            
+            <!-- Payment Method -->
+            <div class="mb-6">
+                <h2 class="text-lg font-bold mb-3">Payment Method</h2>
+                
+                <div class="space-y-3">
+                    <div class="payment-option">
+                        <input type="radio" name="payment" id="payment-upi" value="upi" checked>
+                        <label for="payment-upi">
+                            <div class="check-circle"></div>
+                            <div class="w-8 h-8 flex items-center justify-center bg-blue-500/10 rounded-full text-blue-500 mr-3">
+                                <i class="ri-bank-card-line"></i>
+                            </div>
+                            <span>UPI</span>
+                        </label>
+                    </div>
+                    
+                    <div class="payment-option">
+                        <input type="radio" name="payment" id="payment-card" value="card">
+                        <label for="payment-card">
+                            <div class="check-circle"></div>
+                            <div class="w-8 h-8 flex items-center justify-center bg-purple-500/10 rounded-full text-purple-500 mr-3">
+                                <i class="ri-bank-card-line"></i>
+                            </div>
+                            <span>Credit/Debit Card</span>
+                        </label>
+                    </div>
+                    
+                    <div class="payment-option">
+                        <input type="radio" name="payment" id="payment-wallet" value="wallet">
+                        <label for="payment-wallet">
+                            <div class="check-circle"></div>
+                            <div class="w-8 h-8 flex items-center justify-center bg-green-500/10 rounded-full text-green-500 mr-3">
+                                <i class="ri-wallet-3-line"></i>
+                            </div>
+                            <span>Wallet</span>
+                        </label>
+                    </div>
+                    
+                    <div class="payment-option">
+                        <input type="radio" name="payment" id="payment-cod" value="cod">
+                        <label for="payment-cod">
+                            <div class="check-circle"></div>
+                            <div class="w-8 h-8 flex items-center justify-center bg-yellow-500/10 rounded-full text-yellow-500 mr-3">
+                                <i class="ri-cash-line"></i>
+                            </div>
+                            <span>Cash on Delivery</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Fixed Bottom Bar -->
+        <div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 max-w-[375px] mx-auto">
+            <div class="space-y-2 mb-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600">Subtotal</span>
+                    <span>$26.97</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600">Delivery Fee</span>
+                    <span>$2.99</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600">Tax</span>
+                    <span>$2.40</span>
+                </div>
+                <div class="border-t border-gray-200 pt-2 flex items-center justify-between">
+                    <span class="font-bold">Total</span>
+                    <span class="font-bold text-lg">$32.36</span>
+                </div>
+            </div>
+            
+            <button class="w-full bg-primary text-white py-3.5 font-medium !rounded-button flex items-center justify-center cursor-pointer">
+                <span>Place Order</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Order Tracking Screen (Initially Hidden) -->
+    <div id="tracking-screen" class="pb-16 hidden">
+        <!-- Header -->
+        <div class="fixed top-0 left-0 w-full bg-white z-50 shadow-sm">
+            <div class="flex items-center px-4 py-3 max-w-[375px] mx-auto">
+                <button id="back-to-home-from-tracking" class="w-10 h-10 flex items-center justify-center cursor-pointer">
+                    <i class="ri-arrow-left-line ri-lg"></i>
+                </button>
+                <h1 class="text-lg font-bold ml-2">Track Order</h1>
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="pt-16">
+            <!-- Order Status -->
+            <div class="px-4 py-4 bg-white">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="font-bold">Order #PZ7845</h2>
+                    <span class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded-full">On the way</span>
+                </div>
+                
+                <div class="flex items-center justify-between text-sm text-gray-600 mb-6">
+                    <span>Today, 2:30 PM</span>
+                    <span>Estimated Delivery: 3:05 PM</span>
+                </div>
+                
+                <div class="relative pb-2">
+                    <div class="absolute left-3 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+                    
+                    <div class="relative flex items-start mb-6">
+                        <div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center z-10">
+                            <i class="ri-check-line text-white text-xs"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-medium">Order Confirmed</h3>
+                            <p class="text-xs text-gray-500">2:30 PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="relative flex items-start mb-6">
+                        <div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center z-10">
+                            <i class="ri-check-line text-white text-xs"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-medium">Preparing</h3>
+                            <p class="text-xs text-gray-500">2:35 PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="relative flex items-start mb-6">
+                        <div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center z-10">
+                            <i class="ri-check-line text-white text-xs"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-medium">Baking</h3>
+                            <p class="text-xs text-gray-500">2:45 PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="relative flex items-start mb-6">
+                        <div class="w-6 h-6 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center z-10">
+                            <div class="w-2 h-2 rounded-full bg-primary"></div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-medium">Out for Delivery</h3>
+                            <p class="text-xs text-gray-500">2:55 PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="relative flex items-start">
+                        <div class="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center z-10">
+                            <div class="w-2 h-2 rounded-full bg-gray-400"></div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-medium text-gray-400">Delivered</h3>
+                            <p class="text-xs text-gray-500">Estimated: 3:05 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Map View -->
+            <div class="h-64 relative">
+                <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://public.readdy.ai/gen_page/map_placeholder_1280x720.png')"></div>
+                <div class="absolute bottom-4 right-4">
+                    <button class="w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center cursor-pointer">
+                        <i class="ri-focus-3-line"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Delivery Details -->
+            <div class="p-4 bg-white">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-gray-100 rounded-full overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=Professional%20delivery%20person%20portrait%2C%20friendly%20smile%2C%20wearing%20delivery%20uniform%20and%20cap%2C%20clean%20background%2C%20high-quality%20professional%20headshot&width=48&height=48&seq=driver&orientation=squarish" alt="Driver" class="w-full h-full object-cover">
+                    </div>
+                    <div class="ml-3 flex-1">
+                        <h3 class="font-medium">Michael Johnson</h3>
+                        <p class="text-xs text-gray-500">Your Delivery Partner</p>
+                    </div>
+                    <button class="w-10 h-10 bg-primary/10 rounded-full text-primary flex items-center justify-center cursor-pointer">
+                        <i class="ri-phone-line"></i>
+                    </button>
+                </div>
+                
+                <div class="border-t border-gray-100 pt-4">
+                    <h3 class="font-medium mb-2">Order Summary</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center justify-between">
+                            <span>1 × Pepperoni Pizza (Medium)</span>
+                            <span>$14.99</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span>1 × Chicken Wings (8 pcs)</span>
+                            <span>$8.99</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span>1 × Cola (1.5L)</span>
+                            <span>$2.99</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Support Button -->
+            <div class="fixed bottom-20 right-4">
+                <button class="w-12 h-12 bg-primary rounded-full shadow-lg flex items-center justify-center text-white cursor-pointer">
+                    <i class="ri-customer-service-2-line ri-lg"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Screen (Initially Hidden) -->
+    <div id="profile-screen" class="pb-20 hidden">
+        <!-- Header -->
+        <div class="fixed top-0 left-0 w-full bg-white z-50 shadow-sm">
+            <div class="flex items-center justify-between px-4 py-3 max-w-[375px] mx-auto">
+                <h1 class="text-lg font-bold">My Profile</h1>
+                <button class="w-10 h-10 flex items-center justify-center cursor-pointer">
+                    <i class="ri-settings-3-line ri-lg"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="pt-16 px-4">
+            <!-- Profile Info -->
+            <div class="flex items-center mb-6">
+                <div class="w-20 h-20 bg-gray-100 rounded-full overflow-hidden">
+                    <img src="https://readdy.ai/api/search-image?query=Professional%20portrait%20of%20a%20young%20person%2C%20neutral%20expression%2C%20clean%20background%2C%20high-quality%20professional%20headshot&width=80&height=80&seq=profile&orientation=squarish" alt="Profile" class="w-full h-full object-cover">
+                </div>
+                <div class="ml-4">
+                    <h2 class="text-xl font-bold">Emily Wilson</h2>
+                    <p class="text-gray-600">+1 (555) 987-6543</p>
+                    <button class="mt-2 px-3 py-1 bg-primary/10 text-primary text-xs rounded-full font-medium cursor-pointer">
+                        Edit Profile
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Settings -->
+            <div class="bg-white rounded-lg shadow-sm mb-6">
+                <div class="p-4 border-b border-gray-100">
+                    <h3 class="font-medium mb-3">Account Settings</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center cursor-pointer">
+                            <div class="w-8 h-8 flex items-center justify-center bg-blue-500/10 rounded-full text-blue-500">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <span class="ml-3 flex-1">Saved Addresses</span>
+                            <div class="w-5 h-5 flex items-center justify-center text-gray-400">
+                                <i class="ri-arrow-right-s-line"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center cursor-pointer">
+                            <div class="w-8 h-8 flex items-center justify-center bg-purple-500/10 rounded-full text-purple-500">
+                                <i class="ri-bank-card-line"></i>
+                            </div>
+                            <span class="ml-3 flex-1">Payment Methods</span>
+                            <div class="w-5 h-5 flex items-center justify-center text-gray-400">
+                                <i class="ri-arrow-right-s-line"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center cursor-pointer">
+                            <div class="w-8 h-8 flex items-center justify-center bg-green-500/10 rounded-full text-green-500">
+                                <i class="ri-notification-3-line"></i>
+                            </div>
+                            <span class="ml-3 flex-1">Notifications</span>
+                            <div class="w-5 h-5 flex items-center justify-center text-gray-400">
+                                <i class="ri-arrow-right-s-line"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center cursor-pointer">
+                            <div class="w-8 h-8 flex items-center justify-center bg-yellow-500/10 rounded-full text-yellow-500">
+                                <i class="ri-question-line"></i>
+                            </div>
+                            <span class="ml-3 flex-1">Help & Support</span>
+                            <div class="w-5 h-5 flex items-center justify-center text-gray-400">
+                                <i class="ri-arrow-right-s-line"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-4">
+                    <button class="flex items-center text-red-500 cursor-pointer">
+                        <div class="w-8 h-8 flex items-center justify-center bg-red-500/10 rounded-full text-red-500">
+                            <i class="ri-logout-box-line"></i>
+                        </div>
+                        <span class="ml-3">Logout</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Order History -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-bold">Order History</h2>
+                    <a href="#" class="text-primary text-sm">See All</a>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-white rounded-lg shadow-sm p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <h3 class="font-medium">Order #PZ7845</h3>
+                                <p class="text-xs text-gray-500">Today, 2:30 PM</p>
+                            </div>
+                            <span class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded-full">On the way</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-600">
+                                <p>1 × Pepperoni Pizza, 1 × Wings, 1 × Cola</p>
+                                <p class="font-medium mt-1">$32.36</p>
+                            </div>
+                            <button class="px-3 py-1.5 bg-primary text-white text-xs rounded-full font-medium cursor-pointer">
+                                Track
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-sm p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <h3 class="font-medium">Order #PZ7612</h3>
+                                <p class="text-xs text-gray-500">May 12, 2025</p>
+                            </div>
+                            <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Delivered</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-600">
+                                <p>2 × Margherita Pizza, 1 × Garlic Bread</p>
+                                <p class="font-medium mt-1">$28.97</p>
+                            </div>
+                            <button class="px-3 py-1.5 border border-primary text-primary text-xs rounded-full font-medium cursor-pointer">
+                                Reorder
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-sm p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <h3 class="font-medium">Order #PZ7423</h3>
+                                <p class="text-xs text-gray-500">May 5, 2025</p>
+                            </div>
+                            <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Delivered</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-600">
+                                <p>1 × Family Combo</p>
+                                <p class="font-medium mt-1">$24.99</p>
+                            </div>
+                            <button class="px-3 py-1.5 border border-primary text-primary text-xs rounded-full font-medium cursor-pointer">
+                                Reorder
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Bar -->
+    <div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-50 max-w-[375px] mx-auto">
+        <div class="grid grid-cols-4 h-16">
+            <button id="tab-home" class="flex flex-col items-center justify-center cursor-pointer">
+                <div class="w-6 h-6 flex items-center justify-center text-primary">
+                    <i class="ri-home-5-fill ri-lg"></i>
+                </div>
+                <span class="text-xs mt-1 text-primary font-medium">Home</span>
+            </button>
+            
+            <button id="tab-menu" class="flex flex-col items-center justify-center cursor-pointer">
+                <div class="w-6 h-6 flex items-center justify-center text-gray-500">
+                    <i class="ri-restaurant-line ri-lg"></i>
+                </div>
+                <span class="text-xs mt-1 text-gray-500">Menu</span>
+            </button>
+            
+            <button id="tab-orders" class="flex flex-col items-center justify-center cursor-pointer">
+                <div class="w-6 h-6 flex items-center justify-center text-gray-500">
+                    <i class="ri-file-list-3-line ri-lg"></i>
+                </div>
+                <span class="text-xs mt-1 text-gray-500">Orders</span>
+            </button>
+            
+            <button id="tab-profile" class="flex flex-col items-center justify-center cursor-pointer">
+                <div class="w-6 h-6 flex items-center justify-center text-gray-500">
+                    <i class="ri-user-line ri-lg"></i>
+                </div>
+                <span class="text-xs mt-1 text-gray-500">Profile</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show welcome screen by default
+            document.getElementById('welcome-screen').style.display = 'block';
+            
+            // Navigation between screens
+            const screens = {
+                'welcome-screen': document.getElementById('welcome-screen'),
+                'otp-screen': document.getElementById('otp-screen'),
+                'home-screen': document.getElementById('home-screen'),
+                'product-screen': document.getElementById('product-screen'),
+                'cart-screen': document.getElementById('cart-screen'),
+                'tracking-screen': document.getElementById('tracking-screen'),
+                'profile-screen': document.getElementById('profile-screen')
+            };
+            
+            function showScreen(screenId) {
+                Object.values(screens).forEach(screen => {
+                    screen.style.display = 'none';
+                });
+                screens[screenId].style.display = 'block';
+            }
+            
+            // Welcome screen buttons
+            const continueWithPhoneBtn = document.querySelector('#welcome-screen button:first-of-type');
+            continueWithPhoneBtn.addEventListener('click', () => {
+                showScreen('otp-screen');
+            });
+            
+            const continueAsGuestBtn = document.querySelector('#welcome-screen button:nth-of-type(2)');
+            continueAsGuestBtn.addEventListener('click', () => {
+                showScreen('home-screen');
+            });
+            
+            // OTP screen back button
+            document.getElementById('back-to-welcome').addEventListener('click', () => {
+                showScreen('welcome-screen');
+            });
+            
+            // OTP verification button
+            const verifyBtn = document.querySelector('#otp-screen button');
+            verifyBtn.addEventListener('click', () => {
+                showScreen('home-screen');
+            });
+            
+            // Product cards click
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    showScreen('product-screen');
+                });
+            });
+            
+            // Back to home from product screen
+            document.getElementById('back-to-home').addEventListener('click', () => {
+                showScreen('home-screen');
+            });
+            
+            // Add to cart button
+            const addToCartBtn = document.querySelector('#product-screen .fixed.bottom-0 button');
+            addToCartBtn.addEventListener('click', () => {
+                showScreen('cart-screen');
+            });
+            
+            // Back to home from cart
+            document.getElementById('back-to-home-from-cart').addEventListener('click', () => {
+                showScreen('home-screen');
+            });
+            
+            // Place order button
+            const placeOrderBtn = document.querySelector('#cart-screen .fixed.bottom-0 button');
+            placeOrderBtn.addEventListener('click', () => {
+                showScreen('tracking-screen');
+            });
+            
+            // Back to home from tracking
+            document.getElementById('back-to-home-from-tracking').addEventListener('click', () => {
+                showScreen('home-screen');
+            });
+            
+            // Tab bar navigation
+            document.getElementById('tab-home').addEventListener('click', () => {
+                showScreen('home-screen');
+                updateTabBarStyles('tab-home');
+            });
+            
+            document.getElementById('tab-menu').addEventListener('click', () => {
+                showScreen('home-screen'); // For this demo, menu also shows home screen
+                updateTabBarStyles('tab-menu');
+            });
+            
+            document.getElementById('tab-orders').addEventListener('click', () => {
+                showScreen('tracking-screen');
+                updateTabBarStyles('tab-orders');
+            });
+            
+            document.getElementById('tab-profile').addEventListener('click', () => {
+                showScreen('profile-screen');
+                updateTabBarStyles('tab-profile');
+            });
+            
+            // Cart icon click
+            const cartIcon = document.querySelector('#home-screen .ri-shopping-cart-line').parentElement;
+            cartIcon.addEventListener('click', () => {
+                showScreen('cart-screen');
+            });
+            
+            // Track button in profile
+            const trackBtn = document.querySelector('#profile-screen button.bg-primary');
+            trackBtn.addEventListener('click', () => {
+                showScreen('tracking-screen');
+            });
+            
+            function updateTabBarStyles(activeTabId) {
+                const tabs = ['tab-home', 'tab-menu', 'tab-orders', 'tab-profile'];
+                tabs.forEach(tabId => {
+                    const tab = document.getElementById(tabId);
+                    const icon = tab.querySelector('div');
+                    const text = tab.querySelector('span');
+                    
+                    if (tabId === activeTabId) {
+                        icon.classList.remove('text-gray-500');
+                        icon.classList.add('text-primary');
+                        text.classList.remove('text-gray-500');
+                        text.classList.add('text-primary', 'font-medium');
+                        
+                        // Change to filled icon
+                        const iconElement = icon.querySelector('i');
+                        if (iconElement) {
+                            if (tabId === 'tab-home') {
+                                iconElement.className = 'ri-home-5-fill ri-lg';
+                            } else if (tabId === 'tab-menu') {
+                                iconElement.className = 'ri-restaurant-fill ri-lg';
+                            } else if (tabId === 'tab-orders') {
+                                iconElement.className = 'ri-file-list-3-fill ri-lg';
+                            } else if (tabId === 'tab-profile') {
+                                iconElement.className = 'ri-user-fill ri-lg';
+                            }
+                        }
+                    } else {
+                        icon.classList.remove('text-primary');
+                        icon.classList.add('text-gray-500');
+                        text.classList.remove('text-primary', 'font-medium');
+                        text.classList.add('text-gray-500');
+                        
+                        // Change to line icon
+                        const iconElement = icon.querySelector('i');
+                        if (iconElement) {
+                            if (tabId === 'tab-home') {
+                                iconElement.className = 'ri-home-5-line ri-lg';
+                            } else if (tabId === 'tab-menu') {
+                                iconElement.className = 'ri-restaurant-line ri-lg';
+                            } else if (tabId === 'tab-orders') {
+                                iconElement.className = 'ri-file-list-3-line ri-lg';
+                            } else if (tabId === 'tab-profile') {
+                                iconElement.className = 'ri-user-line ri-lg';
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // OTP input field handling
+            const otpInputs = document.querySelectorAll('#otp-screen input');
+            otpInputs.forEach((input, index) => {
+                input.addEventListener('input', (e) => {
+                    if (e.target.value && index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                });
+                
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                        otpInputs[index - 1].focus();
+                    }
+                });
+            });
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Size selection price update
+            const sizeRadios = document.querySelectorAll('input[name="size"]');
+            const priceDisplay = document.querySelector('#product-screen .fixed.bottom-0 .font-bold');
+            
+            sizeRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    let price = 14.99; // Default price (Medium)
+                    
+                    if (radio.value === 'small') {
+                        price = 12.99;
+                    } else if (radio.value === 'large') {
+                        price = 16.99;
+                    }
+                    
+                    priceDisplay.textContent = `$${price.toFixed(2)}`;
+                });
+            });
+            
+            //<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pizza Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Pizza Admin Dashboard</h1>
+    <nav>
+      <ul>
+        <li><a href="user.html">User Management</a></li>
+        <li><a href="menu.html">Menu Management</a></li>
+        <li><a href="orders.html">Order Management</a></li>
+        <li><a href="manual.html">Manual Order</a></li>
+        <li><a href="refund.html">Refunds</a></li>
+        <li><a href="reports.html">Sales Reports</a></li>
+        <li><a href="store.html">Store Management</a></li>
+        <li><a href="assign.html">Assign Orders</a></li>
+        <li><a href="coupon.html">Coupon Setup</a></li>
+      </ul>
+    </nav>
+  <
+
+
+
+            let quantity = 1;
+            
+            minusBtn.addEventListener('click', () => {
+                if (quantity > 1) {
+                    quantity--;
+                    quantityDisplay.textContent = quantity;
+                    updateTotalPrice();
+                }
+            });
+            
+            plusBtn.addEventListener('click', () => {
+                quantity++;
+                quantityDisplay.textContent = quantity;
+                updateTotalPrice();
+            });
+            
+            function updateTotalPrice() {
+                let basePrice = 14.99; // Get the current base price
+                
+                sizeRadios.forEach(radio => {
+                    if (radio.checked) {
+                        if (radio.value === 'small') {
+                            basePrice = 12.99;
+                        } else if (radio.value === 'medium') {
+                            basePrice = 14.99;
+                        } else if (radio.value === 'large') {
+                            basePrice = 16.99;
+                        }
+                    }
+                });
+                
+                const totalPrice = basePrice * quantity;
+                priceDisplay.textContent = `$${totalPrice.toFixed(2)}`;
+            }
+            
+            // Extra toppings price update
+            const toppingCheckboxes = document.querySelectorAll('input[name="toppings"]');
+            toppingCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    updateTotalPrice();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
